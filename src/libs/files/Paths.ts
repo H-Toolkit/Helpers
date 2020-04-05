@@ -1,20 +1,21 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import { commonRegex, RecognizeFiles } from '../../constants/common-regex';
 import { Names } from './Names';
 
 export class Paths {
-	static createIfNotExists(_path: string, opts?: { recognizeFiles?: RecognizeFiles }): string {
-		if (!opts) opts = {};
+	static createIfNotExists(_path: string, opts?: Partial<{ recognizeFiles: RecognizeFiles }>): string {
+		if (!opts) opts = { recognizeFiles: RecognizeFiles.implicate };
 
 		const incomePath = Names.validDirPath(_path);
 		_path = Names.validDirPath(_path);
 
-		if (!path.isAbsolute(_path)) _path = path.resolve(_path);
+		if (!path.isAbsolute(_path) || (os.type() === 'Windows_NT' && path.isAbsolute(_path))) _path = path.resolve(_path);
 
 		let fullDirName: string = _path;
 		let fullFileName: string;
-		if (commonRegex.endWithFileName[opts.recognizeFiles || RecognizeFiles.implicate].test(incomePath)) {
+		if (commonRegex.endWithFileName[opts.recognizeFiles].test(incomePath)) {
 			fullFileName = path.basename(_path);
 			fullDirName = this.removeFileName(_path, fullFileName);
 		}
