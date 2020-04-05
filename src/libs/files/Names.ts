@@ -5,7 +5,7 @@ export class Names {
 		return this._removeExtraSpaces(fileName.replace(commonRegex.invalidFilesName, ''));
 	}
 
-	static validDirPath(dirPath: string): string {
+	static toValidDirPath(dirPath: string): string {
 		const pathType = path.isAbsolute(dirPath) ? PathType.absolute : PathType.relative;
 		return this._removeExtraSpaces(
 			this.removeInvalidDirEnds(dirPath.replace(commonRegex.invalidDirPath[pathType], ''))

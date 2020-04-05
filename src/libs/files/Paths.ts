@@ -1,36 +1,40 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as os from 'os';
+// import * as os from 'os';
 import { commonRegex, RecognizeFiles } from '../../constants/common-regex';
 import { Names } from './Names';
-
+import { OS } from '../os';
 export class Paths {
 	static createIfNotExists(_path: string, opts?: Partial<{ recognizeFiles: RecognizeFiles }>): string {
 		if (!opts) opts = { recognizeFiles: RecognizeFiles.implicate };
 
-		const incomePath = Names.validDirPath(_path);
-		_path = Names.validDirPath(_path);
-
-		if (!path.isAbsolute(_path) || (os.type() === 'Windows_NT' && path.isAbsolute(_path))) _path = path.resolve(_path);
+		const incomePath = Names.toValidDirPath(_path);
+		_path = this._canConvertPathToAbsolute(Names.toValidDirPath(_path));
 
 		let fullDirName: string = _path;
 		let fullFileName: string;
 		if (commonRegex.endWithFileName[opts.recognizeFiles].test(incomePath)) {
 			fullFileName = path.basename(_path);
-			fullDirName = this.removeFileName(_path, fullFileName);
+			fullDirName = this._removeFileName(_path, fullFileName);
 		}
-		this.generateDirsIfNotExists(fullDirName);
+		this._generateDirsIfNotExists(fullDirName);
 
 		// Create the file if not exists
 		if (fullFileName && !fs.existsSync(_path)) fs.writeFileSync(_path, undefined);
 		return _path;
 	}
 
-	private static removeFileName(_path: string, fullFileName: string): string {
+	private static _removeFileName(_path: string, fullFileName: string): string {
 		return _path.replace(RegExp(fullFileName + '$'), '');
 	}
 
-	private static generateDirsIfNotExists(fullDirName: string): void {
+	private static _canConvertPathToAbsolute(_path: string): string {
+		if (!path.isAbsolute(_path) || (OS.currentRunningOs() === 'Windows' && path.isAbsolute(_path)))
+			return path.resolve(_path);
+		return _path;
+	}
+
+	private static _generateDirsIfNotExists(fullDirName: string): void {
 		const paths = fullDirName.split(commonRegex.splitFoldersJunctions);
 		const dirs: string[] = [];
 		// Extract all directories from path
