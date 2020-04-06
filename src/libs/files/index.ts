@@ -1,2 +1,2 @@
-export * from './Names';
-export * from './Paths';
+export * as Names from './Names';
+export * as Paths from './Paths';

@@ -1,22 +1,25 @@
-import { commonRegex, PathType } from '../../constants/common-regex';
 import * as path from 'path';
-export class Names {
-	static validFileName(fileName: string): string {
-		return this._removeExtraSpaces(fileName.replace(commonRegex.invalidFilesName, ''));
-	}
 
-	static toValidDirPath(dirPath: string): string {
-		const pathType = path.isAbsolute(dirPath) ? PathType.absolute : PathType.relative;
-		return this._removeExtraSpaces(
-			this.removeInvalidDirEnds(dirPath.replace(commonRegex.invalidDirPath[pathType], ''))
-		);
-	}
+import { commonRegex } from '../../constants/common-regex';
+import { PathType } from '../../constants/enums';
 
-	private static removeInvalidDirEnds(dirPath: string): string {
-		return dirPath.replace(commonRegex.invalidDirsEnd, '$1');
-	}
+/* Global methods */
+export const validFileName = (fileName: string): string => {
+	return _removeExtraSpaces(fileName.replace(commonRegex.invalidFilesName, ''));
+};
 
-	private static _removeExtraSpaces(fileName: string): string {
-		return fileName.replace(commonRegex.extraSpaces, ' ');
-	}
-}
+export const toValidDirPath = (dirPath: string): string => {
+	const pathType = path.isAbsolute(dirPath) ? PathType.absolute : PathType.relative;
+	const _removedInvalidSymbols = dirPath.replace(commonRegex.invalidDirPath[pathType], '');
+	const _removedInvalidDirEnds = _removeInvalidDirEnds(_removedInvalidSymbols);
+	return _removeExtraSpaces(_removedInvalidDirEnds);
+};
+
+/* Private methods */
+const _removeInvalidDirEnds = (dirPath: string): string => {
+	return dirPath.replace(commonRegex.invalidDirsEnd, '$1');
+};
+
+const _removeExtraSpaces = (fileName: string): string => {
+	return fileName.replace(commonRegex.extraSpaces, ' ');
+};

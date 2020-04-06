@@ -1,6 +1,6 @@
 {
 	"name": "@h-toolkit/helpers",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Lots of solutions to common problems in JavaScript and NodeJS",
 	"main": "dist/main.js",
 	"type": "dist/main.d.ts",
@@ -14,10 +14,10 @@
 		"url": "git+https://github.com/h-toolkit/helpers.git"
 	},
 	"keywords": [
-		"\"helpers\"",
-		"\"node\"",
-		"\"typescript\"",
-		"\"javascript\""
+		"helpers",
+		"node",
+		"typescript",
+		"javascript"
 	],
 	"author": "Hisham Taha Kamal-Al-Din",
 	"license": "MIT",
@@ -26,6 +26,7 @@
 	},
 	"homepage": "https://github.com/h-toolkit/helpers#readme",
 	"devDependencies": {
+		"@h-toolkit/tester": "^1.0.5",
 		"@types/node": "^13.11.0",
 		"nodemon": "^2.0.2",
 		"rimraf": "^3.0.2",
