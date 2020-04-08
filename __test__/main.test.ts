@@ -1,6 +1,7 @@
 /* Data types */
 import('./dataTypes/typeOf');
 import('./dataTypes/whichOneOfTypes');
+import('./dataTypes/enumToArray');
 
 /* Files -> paths */
 import('./files/paths/createIfNotExists');
