@@ -5,12 +5,49 @@ import * as Tester from '@h-toolkit/tester';
 const fileName = 'a/a\\a/a<a>a*a?a.mp4';
 // 'qwertyuiop[]asdfghjkl;\'\\zxcvbnm,./`1234567890-=`~!@#$%^&*()_+QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>?/-*+ضصثقفغعهخحجدشسيبلاتنمكطئءؤرلاىةوزظًٌَُلإإ‘÷×؛<>ٍِ][لأأـ،/:"|~ْ}{لآآ’,.؟}].mp4';
 
+const expectedFileName = 'a\\a\\a\\aaaaa.mp4';
+const currentProjectDir = 'C:\\projects\\GitHub\\h-toolkit\\';
+
 /* Test case: check and create if not exists file or folder path */
-Helpers.Files.Paths.createIfNotExists('./outputs/asd../' + fileName);
-Helpers.Files.Paths.createIfNotExists('./outputs/asd ./' + fileName);
-Helpers.Files.Paths.createIfNotExists('./outputs/asd  ../' + fileName);
-Helpers.Files.Paths.createIfNotExists('\\Top downloader\\Thug Life Magic.mp4');
-Helpers.Files.Paths.createIfNotExists('./outputs/asd/asd/asd/3');
-Helpers.Files.Paths.createIfNotExists('.\\outputs\\asd1\\asd\\asd\\');
-Helpers.Files.Paths.createIfNotExists('./outputs/asd/asd/asd2');
-// Helpers.Files.Paths.createIfNotExists('C:\\Users\\hisha\\Videos\\Top downloader\\Thug Life Magic.mp4');
+Tester.assert({
+	method: {
+		_function: Helpers.Files.Paths.createIfNotExists,
+		method_name: 'createIfNotExists',
+		multiple: [
+			{
+				args: ['./outputs/asd../' + fileName],
+				expect: currentProjectDir + 'helpers\\outputs\\asd\\' + expectedFileName,
+			},
+			{
+				args: ['./outputs/asd ./' + fileName],
+				expect: currentProjectDir + 'helpers\\outputs\\asd\\' + expectedFileName,
+			},
+			{
+				args: ['./outputs/asd  ../' + fileName],
+				expect: currentProjectDir + 'helpers\\outputs\\asd\\' + expectedFileName,
+			},
+			{
+				args: ['./outputs/asd/asd/asd/3'],
+				expect: currentProjectDir + 'helpers\\outputs\\asd\\asd\\asd\\3',
+			},
+			{
+				args: ['.\\outputs\\asd1\\asd\\asd\\'],
+				expect: currentProjectDir + 'helpers\\outputs\\asd1\\asd\\asd',
+			},
+			{
+				args: ['./outputs/asd/asd/asd2'],
+				expect: currentProjectDir + 'helpers\\outputs\\asd\\asd\\asd2',
+			},
+
+			{
+				args: ['/projects/GitHub/h-toolkit/helpers/outputs/Top downloader/video.mp4'],
+				expect: 'C:\\projects\\GitHub\\h-toolkit\\helpers\\outputs\\Top downloader\\video.mp4',
+			},
+			{
+				args: ['C:\\projects\\GitHub\\h-toolkit\\helpers\\outputs\\Top downloader\\Thug Life Magic.mp4'],
+				expect: 'C:\\projects\\GitHub\\h-toolkit\\helpers\\outputs\\Top downloader\\Thug Life Magic.mp4',
+			},
+		],
+	},
+	logIfFailOnly: true,
+});

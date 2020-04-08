@@ -1,8 +1,18 @@
 import { isArray } from 'util';
 
+let _privateParsedArguments: { [key: string]: any };
+
 /* Global methods */
-export const bindArgsToEnv = (): any => {
-	return parseArguments();
+export const bindArgsToEnv = (): typeof _privateParsedArguments => {
+	if (!_privateParsedArguments) {
+		_privateParsedArguments = parseArguments();
+		for (const key in _privateParsedArguments) {
+			if (_privateParsedArguments.hasOwnProperty(key)) {
+				process.env[key] = _privateParsedArguments[key];
+			}
+		}
+	}
+	return _privateParsedArguments;
 };
 
 /* Private methods */
@@ -14,7 +24,6 @@ const parseArguments = (): any => {
 			const _key = /^--(\w+)/.exec(_arg)[1];
 			const _hasValue = /\=.+/.test(_arg);
 			const _value = _hasValue ? /=(.+)$/.exec(_arg)[1] : null;
-			// console.log({ _arg, _key, hasValue, _value });
 			// try {
 			if (_hasValue) {
 				// Has a value
@@ -24,44 +33,42 @@ const parseArguments = (): any => {
 						_parsedArgs[_key] = [_parsedArgs[_key], typeAssert(_value)];
 					} else {
 						// previous value is array
-						if (isArray(_parsedArgs[_key])) _parsedArgs[_key] = [..._parsedArgs[_key], ...typeAssert(_value)];
-						else _parsedArgs[_key] = { ..._parsedArgs[_key], ...typeAssert(_value) };
+						if (isArray(_parsedArgs[_key]))
+							_parsedArgs[_key] = [..._parsedArgs[_key], ...typeAssert(_value, _parsedArgs[_key])];
+						else _parsedArgs[_key] = { ..._parsedArgs[_key], ...typeAssert(_value, _parsedArgs[_key]) };
 					}
 				} else {
 					_parsedArgs[_key] = typeAssert(_value);
 				}
 			}
-			// } catch (error) {
-			// 	throw new Error(JSON.stringify({ error: { _arg, _key, _hasValue, _value } }));
-			// }
 		}
-		console.log('Env -> parseArguments -> _parsedArgs', _parsedArgs);
+		// console.log('Env -> parseArguments -> _parsedArgs', _parsedArgs);
 	}
 	// const parsed = {};
 	return _parsedArgs;
 };
 
-const typeAssert = (_value: string): any => {
+const typeAssert = (_value: string, returnTo?: any): any => {
 	let result: any;
 	// previous value of type string
 	if (['true', 'false'].indexOf(_value) + 1) {
 		// previous value equal is true or false
 		result = _value === 'true';
+		if (isArray(returnTo)) result = [result];
 	} else if (Number(_value)) {
 		// previous value equal is a valid number
 		result = Number(_value);
+		if (isArray(returnTo)) result = [result];
 	} else {
 		try {
-			// const validJson = JSON.parse(_value);
 			result = JSON.parse(_value);
-			// if (isArray(validJson)){ result }
+			if (isArray(returnTo) && !isArray(result)) result = Object.entries(result);
 		} catch (error) {
 			// console.log('Env -> parseArguments -> error', error);
 			// value is string
 			result = _value;
 		}
 	}
-	console.log('Env -> typeAssert -> result', result);
 	return result;
 };
 // }
