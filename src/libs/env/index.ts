@@ -3,7 +3,7 @@ import { isArray } from 'util';
 let _privateParsedArguments: { [key: string]: any };
 
 /* Global methods */
-export const bindArgsToEnv = (): typeof _privateParsedArguments => {
+export function bindArgsToEnv(): typeof _privateParsedArguments {
 	if (!_privateParsedArguments) {
 		_privateParsedArguments = parseArguments();
 		for (const key in _privateParsedArguments) {
@@ -13,7 +13,7 @@ export const bindArgsToEnv = (): typeof _privateParsedArguments => {
 		}
 	}
 	return _privateParsedArguments;
-};
+}
 
 /* Private methods */
 const parseArguments = (): any => {
