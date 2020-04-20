@@ -1,5 +1,5 @@
-import * as Helpers from '../../../src/main';
-import * as Tester from '@h-toolkit/tester';
+import Helpers from '../../../src/main';
+import Tester from '@h-toolkit/tester';
 
 /* generate file name */
 const fileName = 'a/a\\a/a<a>a*a?a.mp4';
@@ -49,5 +49,5 @@ Tester.assert({
 			},
 		],
 	},
-	logIfFailOnly: true,
+	noLogFor: { succeeded: true },
 });

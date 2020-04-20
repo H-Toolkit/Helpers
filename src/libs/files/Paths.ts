@@ -7,7 +7,7 @@ import { commonRegex } from '../../constants/common-regex';
 import { RecognizeFiles } from '../../constants/enums';
 
 /* Global methods */
-export function createIfNotExists(_path: string, opts?: Partial<{ recognizeFiles: RecognizeFiles }>): string {
+export function createIfNotExists(_path: string, opts?: { recognizeFiles: RecognizeFiles }): string {
 	if (!opts) opts = { recognizeFiles: RecognizeFiles.implicate };
 
 	const incomePath = Names.toValidDirPath(_path);
@@ -22,7 +22,7 @@ export function createIfNotExists(_path: string, opts?: Partial<{ recognizeFiles
 	_generateDirsIfNotExists(fullDirName);
 
 	// Create the file if not exists
-	if (fullFileName && !fs.existsSync(_path)) fs.writeFileSync(_path, undefined);
+	if (fullFileName! && !fs.existsSync(_path)) fs.writeFileSync(_path, undefined);
 	return _path;
 }
 

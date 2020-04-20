@@ -1,5 +1,5 @@
-import * as Helpers from '../../src/main';
-import * as Tester from '@h-toolkit/tester';
+import Helpers from '../../src/main';
+import Tester from '@h-toolkit/tester';
 import { OperationSystemTypes } from '../../src/constants/enums';
 
 Tester.assert({
@@ -9,5 +9,5 @@ Tester.assert({
 		args: [],
 		expect: OperationSystemTypes.Windows_NT,
 	},
-	logIfFailOnly: true,
+	noLogFor: { succeeded: true },
 });

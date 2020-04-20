@@ -1,13 +1,14 @@
 {
 	"name": "@h-toolkit/helpers",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"description": "Lots of solutions to common problems in JavaScript and NodeJS",
 	"main": "dist/main.js",
 	"type": "dist/main.d.ts",
 	"scripts": {
 		"build": "tsc",
 		"prepublish": "tsc",
-		"start:dev": "nodemon"
+		"start:dev": "nodemon",
+		"start:watch": "rimraf dist/ && tsc -w"
 	},
 	"repository": {
 		"type": "git",
@@ -26,12 +27,15 @@
 	},
 	"homepage": "https://github.com/h-toolkit/helpers#readme",
 	"devDependencies": {
-		"@h-toolkit/tester": "^1.0.7",
+		"@types/chalk": "^2.2.0",
 		"@types/node": "^13.11.0",
 		"nodemon": "^2.0.2",
 		"rimraf": "^3.0.2",
 		"ts-node": "^8.8.1",
 		"typescript": "^3.8.3"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@h-toolkit/tester": "^1.1.0",
+		"chalk": "^4.0.0"
+	}
 }

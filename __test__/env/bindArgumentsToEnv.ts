@@ -1,5 +1,5 @@
-import * as Helpers from '../../src/main';
-import * as Tester from '@h-toolkit/tester';
+import Helpers from '../../src/main';
+import Tester from '@h-toolkit/tester';
 
 process.argv.push(
 	...[
@@ -41,5 +41,5 @@ Tester.assert({
 			a9: { age: 19, name: 'hisham', values: [2, true, 'love'], age2: 19, name2: 'hisham', values2: [2, true, 'love'] },
 		},
 	},
-	logIfFailOnly: true,
+	noLogFor: { succeeded: true },
 });

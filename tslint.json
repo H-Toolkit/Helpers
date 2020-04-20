@@ -15,5 +15,5 @@
 		"object-literal-sort-keys": false
 	},
 	"rulesDirectory": [],
-	"linterOptions": { "exclude": ["tester"] }
+	"linterOptions": { "exclude": ["./node_modules", "./dist", "./__test__"] }
 }

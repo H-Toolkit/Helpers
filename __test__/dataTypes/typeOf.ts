@@ -1,5 +1,5 @@
-import * as Helpers from '../../src/main';
-import * as Tester from '@h-toolkit/tester';
+import Helpers from '../../src/main';
+import Tester from '@h-toolkit/tester';
 
 interface Ix {}
 const _interfacing: Ix = {};
@@ -14,7 +14,7 @@ Tester.assert({
 		_function: Helpers.DataTypes.typeOf,
 		method_name: 'typeOf',
 		multiple: [
-			{ args: [_classing], expect: 'Classing' },
+			{ args: [_classing], expect: 'classing' },
 			{ args: [Symbol('any')], expect: 'symbol' },
 			{ args: [undefined], expect: 'undefined' },
 			{ args: [null], expect: 'null' },
@@ -34,11 +34,11 @@ Tester.assert({
 			{ args: [_enum], expect: 'object' },
 			{ args: [() => {}], expect: 'function' },
 			{ args: [new Function()], expect: 'function' },
-			{ args: [function* () {}], expect: 'generatorFunction' },
+			{ args: [function* () {}], expect: 'function' },
 			// { args: null, expect: '' },
 			// { args: null, expect: '' },
 			// { args: null, expect: '' },
 		],
 	},
-	logIfFailOnly: true,
+	noLogFor: { succeeded: true },
 });

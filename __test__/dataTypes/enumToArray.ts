@@ -1,5 +1,5 @@
-import * as Helpers from '../../src/main';
-import * as Tester from '@h-toolkit/tester';
+import Helpers from '../../src/main';
+import Tester from '@h-toolkit/tester';
 
 enum _enum1 {
 	a,
@@ -24,5 +24,5 @@ Tester.assert({
 			// { args: null, expect: '' },
 		],
 	},
-	logIfFailOnly: true,
+	noLogFor: { succeeded: true },
 });

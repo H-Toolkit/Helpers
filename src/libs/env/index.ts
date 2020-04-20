@@ -21,24 +21,24 @@ const parseArguments = (): any => {
 	const _parsedArgs: any = {};
 	for (const _arg of _arguments) {
 		if (/^--\w/.test(_arg)) {
-			const _key = /^--(\w+)/.exec(_arg)[1];
+			const _key = /^--(\w+)/.exec(_arg)![1];
 			const _hasValue = /\=.+/.test(_arg);
-			const _value = _hasValue ? /=(.+)$/.exec(_arg)[1] : null;
+			const _value = _hasValue ? /=(.+)$/.exec(_arg)![1] : null;
 			// try {
 			if (_hasValue) {
 				// Has a value
 				if (_parsedArgs.hasOwnProperty(_key)) {
 					// has previous value
 					if (['boolean', 'string', 'number'].indexOf(typeof _parsedArgs[_key]) + 1) {
-						_parsedArgs[_key] = [_parsedArgs[_key], typeAssert(_value)];
+						_parsedArgs[_key] = [_parsedArgs[_key], typeAssert(_value!)];
 					} else {
 						// previous value is array
 						if (isArray(_parsedArgs[_key]))
-							_parsedArgs[_key] = [..._parsedArgs[_key], ...typeAssert(_value, _parsedArgs[_key])];
-						else _parsedArgs[_key] = { ..._parsedArgs[_key], ...typeAssert(_value, _parsedArgs[_key]) };
+							_parsedArgs[_key] = [..._parsedArgs[_key], ...typeAssert(_value!, _parsedArgs[_key])];
+						else _parsedArgs[_key] = { ..._parsedArgs[_key], ...typeAssert(_value!, _parsedArgs[_key]) };
 					}
 				} else {
-					_parsedArgs[_key] = typeAssert(_value);
+					_parsedArgs[_key] = typeAssert(_value!);
 				}
 			}
 		}

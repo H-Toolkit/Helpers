@@ -1,5 +1,5 @@
-import * as Helpers from '../../src/main';
-import * as Tester from '@h-toolkit/tester';
+import Helpers from '../../src/main';
+import Tester from '@h-toolkit/tester';
 
 Tester.assert({
 	method: {
@@ -20,5 +20,5 @@ Tester.assert({
 			// { args: null, expect: true },
 		],
 	},
-	logIfFailOnly: true,
+	noLogFor: { succeeded: true },
 });
